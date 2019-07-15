@@ -31,6 +31,7 @@ function addItem (value) {
 
   data.todo.push(value);
   dataObjectUpdated();
+  updatePercentage();
 }
 
 function renderTodoList() {
@@ -65,6 +66,7 @@ function removeItem() {
   dataObjectUpdated();
 
   parent.removeChild(item);
+  updatePercentage();
 }
 
 function completeItem() {
@@ -81,6 +83,7 @@ function completeItem() {
     data.todo.push(value);
   }
   dataObjectUpdated();
+  updatePercentage();
 
   // Check if the item should be added to the completed list or to re-added to the todo list
   var target = (id === 'todo') ? document.getElementById('completed'):document.getElementById('todo');
@@ -118,4 +121,22 @@ function addItemToDOM(text, completed) {
   item.appendChild(buttons);
 
   list.insertBefore(item, list.childNodes[0]);
+}
+
+function updatePercentage(){
+	
+var doLength = data.todo.length;
+var doneLength = data.completed.length;
+var total = (doLength + doneLength);
+var percentage = ((doneLength/total)*100).toFixed(1);
+
+if(doneLength==0||doneLength===NaN){
+document.getElementById('percentage').innerHTML='0%';
+}
+if(percentage==1){
+document.getElementById('percentage').innerHTML='100%';
+}
+else{
+	document.getElementById('percentage').innerHTML=`${percentage}%`;
+}
 }
